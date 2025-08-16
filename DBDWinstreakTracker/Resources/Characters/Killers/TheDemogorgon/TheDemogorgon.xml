@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CharacterData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>The Demogorgon</Name>
+  <Character_Portrait_Path>Resources\Characters\Killers\TheDemogorgon\TheDemogorgonPortrait.png</Character_Portrait_Path>
+  <Character_Perks>
+	<PerkData>
+		<Name>Surge</Name>
+		<Description>Rejoltance is a very real perk</Description>
+		<Perk_Icon_Path>Resources\Characters\Killers\TheDemogorgon\Perks\Surge.png</Perk_Icon_Path>
+	</PerkData>
+  </Character_Perks>
+</CharacterData>
