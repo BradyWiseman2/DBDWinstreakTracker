@@ -14,7 +14,7 @@ namespace DBDWinstreakTracker
         protected XmlSerializer KillerSerializer;
         protected XmlSerializer AddonSerializer;
         protected XmlSerializer StreakSerializer;
-        protected StreakData ActiveStreak { get; set; }
+        protected GenericStreak ActiveStreak { get; set; }
         public Form1()
         {
             InitializeComponent();
@@ -52,17 +52,17 @@ namespace DBDWinstreakTracker
             {
                 using (StreamReader sr = new StreamReader("SavedStreaks/Streaks.xml"))
                 {
-                    SavedStreaks = (StreakSaveFile)StreakSerializer.Deserialize(sr);                   
+                    SavedStreaks = (StreakSaveFile)StreakSerializer.Deserialize(sr);
                     SavedStreaks.Streaks.Sort((x, y) => DateTime.Compare(x.LastEdited, y.LastEdited));
                     SavedStreaks.Streaks.Reverse();
                     foreach (StreakData s in SavedStreaks.Streaks)
                     {
-                        lBox_SavedStreaks.Items.Add($"{s.StreakType} - {s.Character.Name} - {s.Wins} Wins");
+                        lBox_SavedStreaks.Items.Add($"{s.StreakType} - {s.CharacterID} - {s.Wins} Wins");
                     }
-                    
+
                 }
             }
-            if(SavedStreaks.Streaks == null)
+            if (SavedStreaks.Streaks == null)
             {
                 SavedStreaks.Streaks = new List<StreakData>();
                 lBox_SavedStreaks.Items.Add("You have no saved streaks. Start a new streak by pressing New Streak.");
@@ -130,7 +130,7 @@ namespace DBDWinstreakTracker
                     CharacterFlowPanel.Controls[i].Margin = new Padding(lastRowMargin, 0, 0, 40);
                 }
             }
-        }            
+        }
         private void button1_Click(object sender, EventArgs e)
         {
 
@@ -143,28 +143,16 @@ namespace DBDWinstreakTracker
                 case 0:
                     if (cBoxCharacterSelector.SelectedIndex != -1)
                     {
-                        ActiveStreak = new StreakData();
-                        ActiveStreak.TargetWins = 0;
-                        ActiveStreak.CharacterID = LoadedCharacters[cBoxCharacterSelector.SelectedIndex].Character_ID;
-                        ActiveStreak.Wins = 0;
-                        ActiveStreak.IsStreakEnded = false;                        
-                        SavedStreaks.Streaks.Add(ActiveStreak);
-                        ActiveStreak.LastEdited = DateTime.Now;
+                        ActiveStreak = new GenericStreak(
+                            new StreakData(LoadedCharacters[cBoxCharacterSelector.SelectedIndex].Character_ID, 0));
+                        SavedStreaks.Streaks.Add(ActiveStreak.SaveData);
                         GoToStreakPage(3);
                     }
                     break;
                 case 2:
-                    if (cBoxCharacterSelector.SelectedIndex != -1)
-                    {
-                        ActiveStreak = new Random2v8StreakData();
-                        ActiveStreak.TargetWins = 0;
-                        ActiveStreak.CharacterID = LoadedCharacters[cBoxCharacterSelector.SelectedIndex].Character_ID;
-                        ActiveStreak.Wins = 0;
-                        ActiveStreak.IsStreakEnded = false;
-                        SavedStreaks.Streaks.Add(ActiveStreak);
-                        ActiveStreak.LastEdited = DateTime.Now;
-                        GoToStreakPage(3);
-                    }
+                    ActiveStreak = new Random2v8Streak(new Random2v8StreakData(0));
+                    SavedStreaks.Streaks.Add(ActiveStreak.SaveData);
+                    GoToStreakPage(4);
                     break;
             }
 
@@ -173,8 +161,8 @@ namespace DBDWinstreakTracker
 
         private void btnBasicWin_Click(object sender, EventArgs e)
         {
-            ActiveStreak.Wins++;
-            lblBasicWins.Text = $"Wins: {ActiveStreak.Wins}";
+            ActiveStreak.IncrementWins();
+            lblBasicWins.Text = $"Wins: {ActiveStreak.SaveData.Wins}";
         }
         private void GoToStreakPage(int page)
         {
@@ -183,7 +171,11 @@ namespace DBDWinstreakTracker
                 case 3:
                     tabControl1.SelectedIndex = 3;
                     pBoxBasicCharacter.Image = ActiveStreak.Character.Character_Portrait;
-                    lblBasicWins.Text = $"Wins: {ActiveStreak.Wins}";
+                    lblBasicWins.Text = $"Wins: {ActiveStreak.SaveData.Wins}";
+                    break;
+                case 4:
+                    tabControl1.SelectedIndex = 4;
+                    Set2v8Visuals();
                     break;
             }
         }
@@ -192,27 +184,63 @@ namespace DBDWinstreakTracker
         {
 
         }
+        private void Set2v8Visuals()
+        {
+            Random2v8Streak streak = ActiveStreak as Random2v8Streak;
+            pBox2v8P1.Image = streak.Player1.Character_Portrait;
+            pBox2v8P2.Image = streak.Player2.Character_Portrait;
 
+            lbl2v8P1Killer.Text = streak.Player1.Name;
+            lbl2v8P1Class.Text = streak.Player1Class;
+
+            lbl2v8P2Killer.Text = streak.Player2.Name;
+            lbl2v8P2Class.Text = streak.Player2Class;
+            lbl2v8Wins.Text = $"Wins: {streak.SaveData.Wins}";
+        }
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (MessageBox.Show("Do you want to save changes to your streaks before closing?", "",
-        MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (ActiveStreak != null)
             {
-                using (StreamWriter sr = new StreamWriter("SavedStreaks/Streaks.xml"))
+                if (ActiveStreak.UnsavedChanges)
                 {
-                    StreakSerializer.Serialize(sr, SavedStreaks);
+                    if (MessageBox.Show("Do you want to save changes to your streaks before closing?", "",
+      MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        using (StreamWriter sr = new StreamWriter("SavedStreaks/Streaks.xml"))
+                        {
+                            StreakSerializer.Serialize(sr, SavedStreaks);
+                        }
+                    }
                 }
             }
+
         }
 
         private void btn_LoadStreak_Click(object sender, EventArgs e)
         {
-            if(lBox_SavedStreaks.SelectedIndex != -1)
+            if (lBox_SavedStreaks.SelectedIndex != -1)
             {
-                ActiveStreak = SavedStreaks.Streaks[lBox_SavedStreaks.SelectedIndex];
-                ActiveStreak.LastEdited = DateTime.Now;
-                GoToStreakPage(3);               
+                StreakData a = SavedStreaks.Streaks[lBox_SavedStreaks.SelectedIndex];
+                switch (a.StreakType)
+                {
+                    case "Basic Streak":
+                        ActiveStreak = new GenericStreak(a);
+                         GoToStreakPage(3);
+                         break;
+                    case "2v8 Random Streak":
+                        ActiveStreak = new Random2v8Streak(a as Random2v8StreakData);
+                        GoToStreakPage(4);
+                        Set2v8Visuals();
+                        break;
+                }
+               
             }
+        }
+
+        private void btn2v8Win_Click(object sender, EventArgs e)
+        {
+            ActiveStreak.IncrementWins();
+            Set2v8Visuals();
         }
     }
 }

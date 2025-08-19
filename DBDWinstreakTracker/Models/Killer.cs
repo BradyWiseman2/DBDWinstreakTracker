@@ -32,5 +32,9 @@ namespace DBDWinstreakTracker
             Character_Perks = new List<Perk>();
             Killers.Add(this);
         }
+        public static Killer GetByID(int id)
+        {
+            return Killers.Where(x => x.Character_ID == id).First();
+        }
     }
 }
