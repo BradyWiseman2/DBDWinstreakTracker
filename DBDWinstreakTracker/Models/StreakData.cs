@@ -17,6 +17,7 @@ namespace DBDWinstreakTracker
     public class StreakData
     {      
         public virtual string StreakType { get { return "Basic Streak"; } }
+        public virtual string StreakDisplayString { get { return $"{StreakType} - {Killer.GetByID(CharacterID).Name} - {Wins} wins"; } }
         public int StreakID { get; set; }
         public int CharacterID { get; set; }
         public int Wins { get; set; }
@@ -64,6 +65,7 @@ namespace DBDWinstreakTracker
         public Tag ActiveKiller2 { get; set; }
         public int KillerRepeatMatches { get; set; }
         public override string StreakType { get { return "2v8 Random Streak"; } }
+        public override string StreakDisplayString { get { return $"{StreakType} - {Wins} wins"; } }
 
         public Random2v8StreakData(int targetWins):base(268435456, targetWins)
         {

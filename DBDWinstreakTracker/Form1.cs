@@ -56,8 +56,8 @@ namespace DBDWinstreakTracker
                     SavedStreaks.Streaks.Sort((x, y) => DateTime.Compare(x.LastEdited, y.LastEdited));
                     SavedStreaks.Streaks.Reverse();
                     foreach (StreakData s in SavedStreaks.Streaks)
-                    {
-                        lBox_SavedStreaks.Items.Add($"{s.StreakType} - {s.CharacterID} - {s.Wins} Wins");
+                    {                       
+                        lBox_SavedStreaks.Items.Add(s.StreakDisplayString);                      
                     }
 
                 }
@@ -206,16 +206,19 @@ namespace DBDWinstreakTracker
                     if (MessageBox.Show("Do you want to save changes to your streaks before closing?", "",
       MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
-                        using (StreamWriter sr = new StreamWriter("SavedStreaks/Streaks.xml"))
-                        {
-                            StreakSerializer.Serialize(sr, SavedStreaks);
-                        }
+                        SaveStreaks();
                     }
                 }
             }
 
         }
-
+        private void SaveStreaks()
+        {
+            using (StreamWriter sr = new StreamWriter("SavedStreaks/Streaks.xml"))
+            {
+                StreakSerializer.Serialize(sr, SavedStreaks);
+            }
+        }
         private void btn_LoadStreak_Click(object sender, EventArgs e)
         {
             if (lBox_SavedStreaks.SelectedIndex != -1)
@@ -225,15 +228,15 @@ namespace DBDWinstreakTracker
                 {
                     case "Basic Streak":
                         ActiveStreak = new GenericStreak(a);
-                         GoToStreakPage(3);
-                         break;
+                        GoToStreakPage(3);
+                        break;
                     case "2v8 Random Streak":
                         ActiveStreak = new Random2v8Streak(a as Random2v8StreakData);
                         GoToStreakPage(4);
                         Set2v8Visuals();
                         break;
                 }
-               
+
             }
         }
 
@@ -241,6 +244,18 @@ namespace DBDWinstreakTracker
         {
             ActiveStreak.IncrementWins();
             Set2v8Visuals();
+        }
+
+        private void btnNewStreak_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedIndex = 2;
+        }
+
+        private void btn2v8Loss_Click(object sender, EventArgs e)
+        {
+            ActiveStreak.EndStreak();
+            SaveStreaks();
+            tabControl1.SelectedIndex = 0;
         }
     }
 }

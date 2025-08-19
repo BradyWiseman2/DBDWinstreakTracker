@@ -31,6 +31,7 @@
             CharacterFlowPanel = new FlowLayoutPanel();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            btnNewStreak = new Button();
             btn_LoadStreak = new Button();
             lBox_SavedStreaks = new ListBox();
             tabPage2 = new TabPage();
@@ -93,6 +94,7 @@
             // 
             // tabPage1
             // 
+            tabPage1.Controls.Add(btnNewStreak);
             tabPage1.Controls.Add(btn_LoadStreak);
             tabPage1.Controls.Add(lBox_SavedStreaks);
             tabPage1.Location = new Point(4, 29);
@@ -104,9 +106,20 @@
             tabPage1.Text = "Home Page";
             tabPage1.UseVisualStyleBackColor = true;
             // 
+            // btnNewStreak
+            // 
+            btnNewStreak.Location = new Point(690, 8);
+            btnNewStreak.Margin = new Padding(3, 4, 3, 4);
+            btnNewStreak.Name = "btnNewStreak";
+            btnNewStreak.Size = new Size(330, 100);
+            btnNewStreak.TabIndex = 2;
+            btnNewStreak.Text = "New Streak";
+            btnNewStreak.UseVisualStyleBackColor = true;
+            btnNewStreak.Click += btnNewStreak_Click;
+            // 
             // btn_LoadStreak
             // 
-            btn_LoadStreak.Location = new Point(845, 120);
+            btn_LoadStreak.Location = new Point(3, 299);
             btn_LoadStreak.Margin = new Padding(3, 4, 3, 4);
             btn_LoadStreak.Name = "btn_LoadStreak";
             btn_LoadStreak.Size = new Size(330, 100);
@@ -117,11 +130,13 @@
             // 
             // lBox_SavedStreaks
             // 
+            lBox_SavedStreaks.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lBox_SavedStreaks.FormattingEnabled = true;
-            lBox_SavedStreaks.Location = new Point(341, 120);
+            lBox_SavedStreaks.ItemHeight = 31;
+            lBox_SavedStreaks.Location = new Point(6, 8);
             lBox_SavedStreaks.Margin = new Padding(3, 4, 3, 4);
             lBox_SavedStreaks.Name = "lBox_SavedStreaks";
-            lBox_SavedStreaks.Size = new Size(478, 304);
+            lBox_SavedStreaks.Size = new Size(678, 283);
             lBox_SavedStreaks.TabIndex = 0;
             // 
             // tabPage2
@@ -288,6 +303,7 @@
             btn2v8Loss.TabIndex = 9;
             btn2v8Loss.Text = "Take an L";
             btn2v8Loss.UseVisualStyleBackColor = true;
+            btn2v8Loss.Click += btn2v8Loss_Click;
             // 
             // btn2v8Win
             // 
@@ -426,5 +442,6 @@
         private Label lbl2v8P1Class;
         private Button btn2v8Loss;
         private Button btn2v8Win;
+        private Button btnNewStreak;
     }
 }
