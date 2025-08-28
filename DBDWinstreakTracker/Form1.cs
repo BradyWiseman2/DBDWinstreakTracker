@@ -15,6 +15,7 @@ namespace DBDWinstreakTracker
         protected XmlSerializer AddonSerializer;
         protected XmlSerializer StreakSerializer;
         protected GenericStreak ActiveStreak { get; set; }
+        protected Dictionary<int, Color> StreakDisplayColors { get; set; }
         public Form1()
         {
             InitializeComponent();
@@ -22,7 +23,8 @@ namespace DBDWinstreakTracker
             PerkSerializer = new XmlSerializer(typeof(List<PerkData>));
             KillerSerializer = new XmlSerializer(typeof(List<KillerData>));
             AddonSerializer = new XmlSerializer(typeof(List<KillerAddonData>));
-            StreakSerializer = new XmlSerializer(typeof(StreakSaveFile));
+            StreakSerializer = new XmlSerializer(typeof(StreakSaveFile)); //Note to self, there's gotta be a better way than having individual Serializers per type
+            StreakDisplayColors = new Dictionary<int, Color>();
             ReloadCharactersAndPerks();
         }
         private void StupidMethodThatShouldntBeNeeded() //Easily the worst bit of code I've ever written instead of learning how to do something right
@@ -40,33 +42,7 @@ namespace DBDWinstreakTracker
         {
             //StupidMethodThatShouldntBeNeeded();
             cBoxStreakTypeSelect.SelectedIndex = 0;
-            if (!Directory.Exists("SavedStreaks"))
-            {
-                Directory.CreateDirectory("SavedStreaks");
-            }
-            if (!File.Exists("SavedStreaks/Streaks.xml"))
-            {
-                SavedStreaks = new StreakSaveFile();
-            }
-            else
-            {
-                using (StreamReader sr = new StreamReader("SavedStreaks/Streaks.xml"))
-                {
-                    SavedStreaks = (StreakSaveFile)StreakSerializer.Deserialize(sr);
-                    SavedStreaks.Streaks.Sort((x, y) => DateTime.Compare(x.LastEdited, y.LastEdited));
-                    SavedStreaks.Streaks.Reverse();
-                    foreach (StreakData s in SavedStreaks.Streaks)
-                    {                       
-                        lBox_SavedStreaks.Items.Add(s.StreakDisplayString);                      
-                    }
-
-                }
-            }
-            if (SavedStreaks.Streaks == null)
-            {
-                SavedStreaks.Streaks = new List<StreakData>();
-                lBox_SavedStreaks.Items.Add("You have no saved streaks. Start a new streak by pressing New Streak.");
-            }
+            ReloadStreaks();
         }
         private void ReloadCharactersAndPerks()
         {
@@ -101,6 +77,49 @@ namespace DBDWinstreakTracker
                 }
             }
             UpdateComboBox();
+        }
+        private void ReloadStreaks()
+        {
+            ActiveStreak = null;
+            SavedStreaks = null;
+            StreakDisplayColors.Clear();
+            lBox_SavedStreaks.Items.Clear();
+            GC.Collect();
+            if (!Directory.Exists("SavedStreaks"))
+            {
+                Directory.CreateDirectory("SavedStreaks");
+            }
+            if (!File.Exists("SavedStreaks/Streaks.xml"))
+            {
+                SavedStreaks = new StreakSaveFile();
+            }
+            else
+            {
+                using (StreamReader sr = new StreamReader("SavedStreaks/Streaks.xml"))
+                {
+                    SavedStreaks = (StreakSaveFile)StreakSerializer.Deserialize(sr);
+                    SavedStreaks.Streaks.Sort((x, y) => DateTime.Compare(x.LastEdited, y.LastEdited));
+                    SavedStreaks.Streaks.Reverse();
+                    foreach (StreakData s in SavedStreaks.Streaks)
+                    {
+                        lBox_SavedStreaks.Items.Add(s.StreakDisplayString);
+                        if (s.IsStreakEnded)
+                        {
+                            StreakDisplayColors.Add(lBox_SavedStreaks.Items.Count - 1, Color.Red);
+                        }
+                        else
+                        {
+                            StreakDisplayColors.Add(lBox_SavedStreaks.Items.Count - 1, Color.Green);
+                        }
+                    }
+
+                }
+            }
+            if (SavedStreaks.Streaks == null)
+            {
+                SavedStreaks.Streaks = new List<StreakData>();
+                lBox_SavedStreaks.Items.Add("You have no saved streaks. Start a new streak by pressing New Streak.");
+            }
         }
         private void UpdateComboBox()
         {
@@ -182,7 +201,10 @@ namespace DBDWinstreakTracker
 
         private void btnLoseStreak_Click(object sender, EventArgs e)
         {
-
+            ActiveStreak.EndStreak();
+            SaveStreaks();
+            ReloadStreaks();
+            tabControl1.SelectedIndex = 0;
         }
         private void Set2v8Visuals()
         {
@@ -224,19 +246,29 @@ namespace DBDWinstreakTracker
             if (lBox_SavedStreaks.SelectedIndex != -1)
             {
                 StreakData a = SavedStreaks.Streaks[lBox_SavedStreaks.SelectedIndex];
-                switch (a.StreakType)
+                if (!a.IsStreakEnded)
                 {
-                    case "Basic Streak":
-                        ActiveStreak = new GenericStreak(a);
-                        GoToStreakPage(3);
-                        break;
-                    case "2v8 Random Streak":
-                        ActiveStreak = new Random2v8Streak(a as Random2v8StreakData);
-                        GoToStreakPage(4);
-                        Set2v8Visuals();
-                        break;
+                    switch (a.StreakType)
+                    {
+                        case "Basic Streak":
+                            ActiveStreak = new GenericStreak(a);
+                            GoToStreakPage(3);
+                            break;
+                        case "2v8 Random Streak":
+                            ActiveStreak = new Random2v8Streak(a as Random2v8StreakData);
+                            GoToStreakPage(4);
+                            Set2v8Visuals();
+                            break;
+                    }
                 }
-
+                else
+                {
+                    MessageBox.Show("A streak marked as Ended cannot be loaded directly");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Select a streak first");
             }
         }
 
@@ -255,7 +287,32 @@ namespace DBDWinstreakTracker
         {
             ActiveStreak.EndStreak();
             SaveStreaks();
+            ReloadStreaks();
             tabControl1.SelectedIndex = 0;
+        }
+
+        private void lBox_SavedStreaks_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            e.DrawBackground();
+            Graphics g = e.Graphics;
+            if (e.Index == lBox_SavedStreaks.SelectedIndex)
+            {
+                g.FillRectangle(new SolidBrush(Color.LightGray), e.Bounds);
+            }
+            else
+            {
+                g.FillRectangle(new SolidBrush(Color.White), e.Bounds);
+            }
+            ListBox lb = (ListBox)sender;
+
+            g.DrawString(lb.Items[e.Index].ToString(), e.Font, new SolidBrush(StreakDisplayColors[e.Index]), new PointF(e.Bounds.X, e.Bounds.Y));
+
+            e.DrawFocusRectangle();
+        }
+
+        private void lBox_SavedStreaks_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lBox_SavedStreaks.Invalidate();
         }
     }
 }

@@ -72,10 +72,9 @@
             CharacterFlowPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             CharacterFlowPanel.AutoScroll = true;
             CharacterFlowPanel.BackColor = SystemColors.ActiveCaption;
-            CharacterFlowPanel.Location = new Point(166, 29);
-            CharacterFlowPanel.Margin = new Padding(3, 4, 3, 4);
+            CharacterFlowPanel.Location = new Point(145, 22);
             CharacterFlowPanel.Name = "CharacterFlowPanel";
-            CharacterFlowPanel.Size = new Size(808, 580);
+            CharacterFlowPanel.Size = new Size(707, 435);
             CharacterFlowPanel.TabIndex = 0;
             // 
             // tabControl1
@@ -85,11 +84,10 @@
             tabControl1.Controls.Add(tabPage3);
             tabControl1.Controls.Add(tabPage4);
             tabControl1.Controls.Add(tabPage5);
-            tabControl1.Location = new Point(14, 16);
-            tabControl1.Margin = new Padding(3, 4, 3, 4);
+            tabControl1.Location = new Point(12, 12);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(1208, 696);
+            tabControl1.Size = new Size(1057, 522);
             tabControl1.TabIndex = 1;
             // 
             // tabPage1
@@ -97,21 +95,19 @@
             tabPage1.Controls.Add(btnNewStreak);
             tabPage1.Controls.Add(btn_LoadStreak);
             tabPage1.Controls.Add(lBox_SavedStreaks);
-            tabPage1.Location = new Point(4, 29);
-            tabPage1.Margin = new Padding(3, 4, 3, 4);
+            tabPage1.Location = new Point(4, 24);
             tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(3, 4, 3, 4);
-            tabPage1.Size = new Size(1200, 663);
+            tabPage1.Padding = new Padding(3);
+            tabPage1.Size = new Size(1049, 494);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Home Page";
             tabPage1.UseVisualStyleBackColor = true;
             // 
             // btnNewStreak
             // 
-            btnNewStreak.Location = new Point(690, 8);
-            btnNewStreak.Margin = new Padding(3, 4, 3, 4);
+            btnNewStreak.Location = new Point(604, 6);
             btnNewStreak.Name = "btnNewStreak";
-            btnNewStreak.Size = new Size(330, 100);
+            btnNewStreak.Size = new Size(289, 75);
             btnNewStreak.TabIndex = 2;
             btnNewStreak.Text = "New Streak";
             btnNewStreak.UseVisualStyleBackColor = true;
@@ -119,10 +115,9 @@
             // 
             // btn_LoadStreak
             // 
-            btn_LoadStreak.Location = new Point(3, 299);
-            btn_LoadStreak.Margin = new Padding(3, 4, 3, 4);
+            btn_LoadStreak.Location = new Point(3, 224);
             btn_LoadStreak.Name = "btn_LoadStreak";
-            btn_LoadStreak.Size = new Size(330, 100);
+            btn_LoadStreak.Size = new Size(289, 75);
             btn_LoadStreak.TabIndex = 1;
             btn_LoadStreak.Text = "Load Streak";
             btn_LoadStreak.UseVisualStyleBackColor = true;
@@ -130,23 +125,24 @@
             // 
             // lBox_SavedStreaks
             // 
+            lBox_SavedStreaks.DrawMode = DrawMode.OwnerDrawFixed;
             lBox_SavedStreaks.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lBox_SavedStreaks.FormattingEnabled = true;
             lBox_SavedStreaks.ItemHeight = 31;
-            lBox_SavedStreaks.Location = new Point(6, 8);
-            lBox_SavedStreaks.Margin = new Padding(3, 4, 3, 4);
+            lBox_SavedStreaks.Location = new Point(5, 6);
             lBox_SavedStreaks.Name = "lBox_SavedStreaks";
-            lBox_SavedStreaks.Size = new Size(678, 283);
+            lBox_SavedStreaks.Size = new Size(594, 190);
             lBox_SavedStreaks.TabIndex = 0;
+            lBox_SavedStreaks.DrawItem += lBox_SavedStreaks_DrawItem;
+            lBox_SavedStreaks.SelectedIndexChanged += lBox_SavedStreaks_SelectedIndexChanged;
             // 
             // tabPage2
             // 
             tabPage2.Controls.Add(CharacterFlowPanel);
-            tabPage2.Location = new Point(4, 29);
-            tabPage2.Margin = new Padding(3, 4, 3, 4);
+            tabPage2.Location = new Point(4, 24);
             tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(3, 4, 3, 4);
-            tabPage2.Size = new Size(1200, 663);
+            tabPage2.Padding = new Padding(3);
+            tabPage2.Size = new Size(1049, 494);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Test Page";
             tabPage2.UseVisualStyleBackColor = true;
@@ -158,20 +154,18 @@
             tabPage3.Controls.Add(cBoxCharacterSelector);
             tabPage3.Controls.Add(cBoxStreakTypeSelect);
             tabPage3.Controls.Add(label1);
-            tabPage3.Location = new Point(4, 29);
-            tabPage3.Margin = new Padding(3, 4, 3, 4);
+            tabPage3.Location = new Point(4, 24);
             tabPage3.Name = "tabPage3";
-            tabPage3.Size = new Size(1200, 663);
+            tabPage3.Size = new Size(1049, 494);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "New Streak";
             tabPage3.UseVisualStyleBackColor = true;
             // 
             // BtnStartStreak
             // 
-            BtnStartStreak.Location = new Point(450, 189);
-            BtnStartStreak.Margin = new Padding(3, 4, 3, 4);
+            BtnStartStreak.Location = new Point(394, 142);
             BtnStartStreak.Name = "BtnStartStreak";
-            BtnStartStreak.Size = new Size(264, 31);
+            BtnStartStreak.Size = new Size(231, 23);
             BtnStartStreak.TabIndex = 5;
             BtnStartStreak.Text = "Create new streak";
             BtnStartStreak.UseVisualStyleBackColor = true;
@@ -180,9 +174,9 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(369, 132);
+            label2.Location = new Point(323, 99);
             label2.Name = "label2";
-            label2.Size = new Size(72, 20);
+            label2.Size = new Size(58, 15);
             label2.TabIndex = 4;
             label2.Text = "Character";
             // 
@@ -191,10 +185,9 @@
             cBoxCharacterSelector.DropDownStyle = ComboBoxStyle.DropDownList;
             cBoxCharacterSelector.FormattingEnabled = true;
             cBoxCharacterSelector.Items.AddRange(new object[] { "Basic Streak", "Random Perk Streak" });
-            cBoxCharacterSelector.Location = new Point(450, 128);
-            cBoxCharacterSelector.Margin = new Padding(3, 4, 3, 4);
+            cBoxCharacterSelector.Location = new Point(394, 96);
             cBoxCharacterSelector.Name = "cBoxCharacterSelector";
-            cBoxCharacterSelector.Size = new Size(263, 28);
+            cBoxCharacterSelector.Size = new Size(231, 23);
             cBoxCharacterSelector.TabIndex = 3;
             // 
             // cBoxStreakTypeSelect
@@ -202,18 +195,17 @@
             cBoxStreakTypeSelect.DropDownStyle = ComboBoxStyle.DropDownList;
             cBoxStreakTypeSelect.FormattingEnabled = true;
             cBoxStreakTypeSelect.Items.AddRange(new object[] { "Basic Streak", "Random Perk Streak", "2v8 Random Streak" });
-            cBoxStreakTypeSelect.Location = new Point(450, 72);
-            cBoxStreakTypeSelect.Margin = new Padding(3, 4, 3, 4);
+            cBoxStreakTypeSelect.Location = new Point(394, 54);
             cBoxStreakTypeSelect.Name = "cBoxStreakTypeSelect";
-            cBoxStreakTypeSelect.Size = new Size(263, 28);
+            cBoxStreakTypeSelect.Size = new Size(231, 23);
             cBoxStreakTypeSelect.TabIndex = 2;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(369, 76);
+            label1.Location = new Point(323, 57);
             label1.Name = "label1";
-            label1.Size = new Size(83, 20);
+            label1.Size = new Size(65, 15);
             label1.TabIndex = 1;
             label1.Text = "Streak type";
             // 
@@ -223,10 +215,9 @@
             tabPage4.Controls.Add(btnBasicWin);
             tabPage4.Controls.Add(lblBasicWins);
             tabPage4.Controls.Add(pBoxBasicCharacter);
-            tabPage4.Location = new Point(4, 29);
-            tabPage4.Margin = new Padding(3, 4, 3, 4);
+            tabPage4.Location = new Point(4, 24);
             tabPage4.Name = "tabPage4";
-            tabPage4.Size = new Size(1200, 663);
+            tabPage4.Size = new Size(1049, 494);
             tabPage4.TabIndex = 3;
             tabPage4.Text = "Basic Streak";
             tabPage4.UseVisualStyleBackColor = true;
@@ -234,10 +225,9 @@
             // btnLoseStreak
             // 
             btnLoseStreak.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnLoseStreak.Location = new Point(303, 121);
-            btnLoseStreak.Margin = new Padding(3, 4, 3, 4);
+            btnLoseStreak.Location = new Point(265, 91);
             btnLoseStreak.Name = "btnLoseStreak";
-            btnLoseStreak.Size = new Size(256, 49);
+            btnLoseStreak.Size = new Size(224, 37);
             btnLoseStreak.TabIndex = 3;
             btnLoseStreak.Text = "Take an L";
             btnLoseStreak.UseVisualStyleBackColor = true;
@@ -246,10 +236,9 @@
             // btnBasicWin
             // 
             btnBasicWin.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnBasicWin.Location = new Point(303, 64);
-            btnBasicWin.Margin = new Padding(3, 4, 3, 4);
+            btnBasicWin.Location = new Point(265, 48);
             btnBasicWin.Name = "btnBasicWin";
-            btnBasicWin.Size = new Size(256, 49);
+            btnBasicWin.Size = new Size(224, 37);
             btnBasicWin.TabIndex = 2;
             btnBasicWin.Text = "Increment Wins";
             btnBasicWin.UseVisualStyleBackColor = true;
@@ -259,18 +248,17 @@
             // 
             lblBasicWins.AutoSize = true;
             lblBasicWins.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblBasicWins.Location = new Point(303, 17);
+            lblBasicWins.Location = new Point(265, 13);
             lblBasicWins.Name = "lblBasicWins";
-            lblBasicWins.Size = new Size(121, 41);
+            lblBasicWins.Size = new Size(99, 32);
             lblBasicWins.TabIndex = 1;
             lblBasicWins.Text = "Wins: 0";
             // 
             // pBoxBasicCharacter
             // 
-            pBoxBasicCharacter.Location = new Point(3, 4);
-            pBoxBasicCharacter.Margin = new Padding(3, 4, 3, 4);
+            pBoxBasicCharacter.Location = new Point(3, 3);
             pBoxBasicCharacter.Name = "pBoxBasicCharacter";
-            pBoxBasicCharacter.Size = new Size(293, 341);
+            pBoxBasicCharacter.Size = new Size(256, 256);
             pBoxBasicCharacter.SizeMode = PictureBoxSizeMode.StretchImage;
             pBoxBasicCharacter.TabIndex = 0;
             pBoxBasicCharacter.TabStop = false;
@@ -286,9 +274,10 @@
             tabPage5.Controls.Add(lbl2v8P1Killer);
             tabPage5.Controls.Add(pBox2v8P2);
             tabPage5.Controls.Add(pBox2v8P1);
-            tabPage5.Location = new Point(4, 29);
+            tabPage5.Location = new Point(4, 24);
+            tabPage5.Margin = new Padding(3, 2, 3, 2);
             tabPage5.Name = "tabPage5";
-            tabPage5.Size = new Size(1200, 663);
+            tabPage5.Size = new Size(1049, 494);
             tabPage5.TabIndex = 4;
             tabPage5.Text = "2v8RandomStreak";
             tabPage5.UseVisualStyleBackColor = true;
@@ -296,10 +285,9 @@
             // btn2v8Loss
             // 
             btn2v8Loss.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btn2v8Loss.Location = new Point(464, 140);
-            btn2v8Loss.Margin = new Padding(3, 4, 3, 4);
+            btn2v8Loss.Location = new Point(406, 105);
             btn2v8Loss.Name = "btn2v8Loss";
-            btn2v8Loss.Size = new Size(256, 49);
+            btn2v8Loss.Size = new Size(224, 37);
             btn2v8Loss.TabIndex = 9;
             btn2v8Loss.Text = "Take an L";
             btn2v8Loss.UseVisualStyleBackColor = true;
@@ -308,10 +296,9 @@
             // btn2v8Win
             // 
             btn2v8Win.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btn2v8Win.Location = new Point(464, 83);
-            btn2v8Win.Margin = new Padding(3, 4, 3, 4);
+            btn2v8Win.Location = new Point(406, 62);
             btn2v8Win.Name = "btn2v8Win";
-            btn2v8Win.Size = new Size(256, 49);
+            btn2v8Win.Size = new Size(224, 37);
             btn2v8Win.TabIndex = 8;
             btn2v8Win.Text = "Increment Wins";
             btn2v8Win.UseVisualStyleBackColor = true;
@@ -321,9 +308,9 @@
             // 
             lbl2v8Wins.AutoSize = true;
             lbl2v8Wins.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lbl2v8Wins.Location = new Point(529, 15);
+            lbl2v8Wins.Location = new Point(463, 11);
             lbl2v8Wins.Name = "lbl2v8Wins";
-            lbl2v8Wins.Size = new Size(121, 41);
+            lbl2v8Wins.Size = new Size(99, 32);
             lbl2v8Wins.TabIndex = 7;
             lbl2v8Wins.Text = "Wins: 0";
             // 
@@ -331,9 +318,9 @@
             // 
             lbl2v8P2Class.AutoSize = true;
             lbl2v8P2Class.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lbl2v8P2Class.Location = new Point(895, 409);
+            lbl2v8P2Class.Location = new Point(783, 307);
             lbl2v8P2Class.Name = "lbl2v8P2Class";
-            lbl2v8P2Class.Size = new Size(188, 41);
+            lbl2v8P2Class.Size = new Size(152, 32);
             lbl2v8P2Class.TabIndex = 6;
             lbl2v8P2Class.Text = "Fearmonger";
             // 
@@ -341,9 +328,9 @@
             // 
             lbl2v8P1Class.AutoSize = true;
             lbl2v8P1Class.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lbl2v8P1Class.Location = new Point(14, 409);
+            lbl2v8P1Class.Location = new Point(12, 307);
             lbl2v8P1Class.Name = "lbl2v8P1Class";
-            lbl2v8P1Class.Size = new Size(95, 41);
+            lbl2v8P1Class.Size = new Size(76, 32);
             lbl2v8P1Class.TabIndex = 5;
             lbl2v8P1Class.Text = "Brute";
             // 
@@ -351,9 +338,9 @@
             // 
             lbl2v8P2Killer.AutoSize = true;
             lbl2v8P2Killer.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lbl2v8P2Killer.Location = new Point(895, 368);
+            lbl2v8P2Killer.Location = new Point(783, 276);
             lbl2v8P2Killer.Name = "lbl2v8P2Killer";
-            lbl2v8P2Killer.Size = new Size(156, 41);
+            lbl2v8P2Killer.Size = new Size(123, 32);
             lbl2v8P2Killer.TabIndex = 4;
             lbl2v8P2Killer.Text = "The Spirit";
             // 
@@ -361,39 +348,36 @@
             // 
             lbl2v8P1Killer.AutoSize = true;
             lbl2v8P1Killer.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lbl2v8P1Killer.Location = new Point(14, 368);
+            lbl2v8P1Killer.Location = new Point(12, 276);
             lbl2v8P1Killer.Name = "lbl2v8P1Killer";
-            lbl2v8P1Killer.Size = new Size(258, 41);
+            lbl2v8P1Killer.Size = new Size(207, 32);
             lbl2v8P1Killer.TabIndex = 3;
             lbl2v8P1Killer.Text = "The Deathslinger";
             // 
             // pBox2v8P2
             // 
-            pBox2v8P2.Location = new Point(895, 15);
-            pBox2v8P2.Margin = new Padding(3, 4, 3, 4);
+            pBox2v8P2.Location = new Point(783, 11);
             pBox2v8P2.Name = "pBox2v8P2";
-            pBox2v8P2.Size = new Size(293, 341);
+            pBox2v8P2.Size = new Size(256, 256);
             pBox2v8P2.SizeMode = PictureBoxSizeMode.StretchImage;
             pBox2v8P2.TabIndex = 2;
             pBox2v8P2.TabStop = false;
             // 
             // pBox2v8P1
             // 
-            pBox2v8P1.Location = new Point(14, 15);
-            pBox2v8P1.Margin = new Padding(3, 4, 3, 4);
+            pBox2v8P1.Location = new Point(12, 11);
             pBox2v8P1.Name = "pBox2v8P1";
-            pBox2v8P1.Size = new Size(293, 341);
+            pBox2v8P1.Size = new Size(256, 256);
             pBox2v8P1.SizeMode = PictureBoxSizeMode.StretchImage;
             pBox2v8P1.TabIndex = 1;
             pBox2v8P1.TabStop = false;
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1258, 775);
+            ClientSize = new Size(1101, 581);
             Controls.Add(tabControl1);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "Form1";
             Text = "Form1";
             FormClosing += Form1_FormClosing;

@@ -666,7 +666,7 @@
       </Tag>
 	  <Tag>
         <Key>2v8</Key>
-        <Value>Yes</Value>
+        <Value>No</Value>
       </Tag>
     </Tags>
     <Character_Portrait_Path>Icons/CharPortraits/Meteor/K28_TheDredge_Portrait.png</Character_Portrait_Path>
@@ -834,7 +834,7 @@
       </Tag>
 	  <Tag>
         <Key>2v8</Key>
-        <Value>Yes</Value>
+        <Value>No</Value>
       </Tag>
     </Tags>
     <Character_Portrait_Path>Icons/CharPortraits/Applepie/K35_TheUnknown_Portrait.png</Character_Portrait_Path>
