@@ -157,19 +157,30 @@ namespace DBDWinstreakTracker
 
         private void BtnStartStreak_Click(object sender, EventArgs e)
         {
+            string name = tBoxStreakName.Text;
             switch (cBoxStreakTypeSelect.SelectedIndex)
             {
                 case 0:
                     if (cBoxCharacterSelector.SelectedIndex != -1)
                     {
+                        
+                        if(name == string.Empty)
+                        {
+                            name = "Generic Streak";
+                        }
                         ActiveStreak = new GenericStreak(
-                            new StreakData(LoadedCharacters[cBoxCharacterSelector.SelectedIndex].Character_ID, 0));
+                            new StreakData(LoadedCharacters[cBoxCharacterSelector.SelectedIndex].Character_ID, 0, name));
                         SavedStreaks.Streaks.Add(ActiveStreak.SaveData);
                         GoToStreakPage(3);
                     }
                     break;
                 case 2:
-                    ActiveStreak = new Random2v8Streak(new Random2v8StreakData(0));
+                    name = tBoxStreakName.Text;
+                    if (name == string.Empty)
+                    {
+                        name = "2v8 Randomizer Streak";
+                    }
+                    ActiveStreak = new Random2v8Streak(new Random2v8StreakData(0,name));
                     SavedStreaks.Streaks.Add(ActiveStreak.SaveData);
                     GoToStreakPage(4);
                     break;
@@ -286,9 +297,7 @@ namespace DBDWinstreakTracker
         private void btn2v8Loss_Click(object sender, EventArgs e)
         {
             ActiveStreak.EndStreak();
-            SaveStreaks();
-            ReloadStreaks();
-            tabControl1.SelectedIndex = 0;
+            SaveandQuitButton(sender,e);
         }
 
         private void lBox_SavedStreaks_DrawItem(object sender, DrawItemEventArgs e)
@@ -313,6 +322,12 @@ namespace DBDWinstreakTracker
         private void lBox_SavedStreaks_SelectedIndexChanged(object sender, EventArgs e)
         {
             lBox_SavedStreaks.Invalidate();
+        }
+        private void SaveandQuitButton(object sender, EventArgs e)
+        {
+            SaveStreaks();
+            ReloadStreaks();
+            tabControl1.SelectedIndex = 0;
         }
     }
 }

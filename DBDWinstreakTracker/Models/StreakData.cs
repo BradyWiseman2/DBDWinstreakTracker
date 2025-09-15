@@ -17,19 +17,21 @@ namespace DBDWinstreakTracker
     public class StreakData
     {      
         public virtual string StreakType { get { return "Basic Streak"; } }
-        public virtual string StreakDisplayString { get { return $"{StreakType} - {Killer.GetByID(CharacterID).Name} - {Wins} wins"; } }
+        public virtual string StreakDisplayString { get { return $"{StreakName} - Generic {Killer.GetByID(CharacterID).Name} Streak - {Wins} wins"; } }
         public int StreakID { get; set; }
         public int CharacterID { get; set; }
         public int Wins { get; set; }
         public int TargetWins { get; set; }
         public bool IsStreakEnded { get; set; }
         public DateTime LastEdited { get; set; }
-        public StreakData(int characterID,int targetWins) 
+        public string StreakName { get; set; }
+        public StreakData(int characterID,int targetWins,string name) 
         {
             CharacterID = characterID;
             TargetWins = targetWins;
             IsStreakEnded = false;
             LastEdited = DateTime.Now;
+            StreakName = name;
         }
         public StreakData() { }
         
@@ -47,13 +49,19 @@ namespace DBDWinstreakTracker
         }
         public virtual void IncrementWins()
         {
-            SaveData.Wins++;
-            UnsavedChanges = true;
+            SaveData.Wins++;           
+            SetSaveData();
         }
         public virtual void EndStreak()
         {
-            SaveData.IsStreakEnded = true;
+            SaveData.IsStreakEnded = true;           
+            SetSaveData();
+        }
+
+        public virtual void SetSaveData()
+        {
             UnsavedChanges = true;
+            SaveData.LastEdited = DateTime.Now;
         }
     }
 
@@ -65,9 +73,9 @@ namespace DBDWinstreakTracker
         public Tag ActiveKiller2 { get; set; }
         public int KillerRepeatMatches { get; set; }
         public override string StreakType { get { return "2v8 Random Streak"; } }
-        public override string StreakDisplayString { get { return $"{StreakType} - {Wins} wins"; } }
+        public override string StreakDisplayString { get { return $"{StreakName} - {StreakType} - {Wins} wins"; } }
 
-        public Random2v8StreakData(int targetWins):base(268435456, targetWins)
+        public Random2v8StreakData(int targetWins,string name):base(268435456, targetWins, name)
         {
             AllKillers = new List<int>();
             foreach (Killer k in Killer.Killers)
@@ -167,7 +175,7 @@ namespace DBDWinstreakTracker
             Player2Class = KillerClasses[rnd.Next(0, KillerClasses.Count)];
             KillerClasses.Remove(Player2Class);
         }
-        public void SetSaveData()
+        public override void SetSaveData()
         {
             StreakData.ActiveKiller1.Key = Player1.Character_ID.ToString();
             StreakData.ActiveKiller1.Value = Player1Class;
@@ -179,6 +187,8 @@ namespace DBDWinstreakTracker
             {
                 StreakData.KillerRepeatList.Add(new Tag(k.Key.Character_ID.ToString(), k.Value.ToString()));
             }
+            UnsavedChanges = true;
+            StreakData.LastEdited = DateTime.Now;
 
         }
         public override void IncrementWins()

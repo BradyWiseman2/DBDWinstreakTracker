@@ -47,6 +47,7 @@
             lblBasicWins = new Label();
             pBoxBasicCharacter = new PictureBox();
             tabPage5 = new TabPage();
+            btnSaveAndQuit = new Button();
             btn2v8Loss = new Button();
             btn2v8Win = new Button();
             lbl2v8Wins = new Label();
@@ -56,6 +57,8 @@
             lbl2v8P1Killer = new Label();
             pBox2v8P2 = new PictureBox();
             pBox2v8P1 = new PictureBox();
+            tBoxStreakName = new TextBox();
+            label3 = new Label();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             tabPage2.SuspendLayout();
@@ -149,6 +152,8 @@
             // 
             // tabPage3
             // 
+            tabPage3.Controls.Add(label3);
+            tabPage3.Controls.Add(tBoxStreakName);
             tabPage3.Controls.Add(BtnStartStreak);
             tabPage3.Controls.Add(label2);
             tabPage3.Controls.Add(cBoxCharacterSelector);
@@ -163,7 +168,7 @@
             // 
             // BtnStartStreak
             // 
-            BtnStartStreak.Location = new Point(394, 142);
+            BtnStartStreak.Location = new Point(412, 166);
             BtnStartStreak.Name = "BtnStartStreak";
             BtnStartStreak.Size = new Size(231, 23);
             BtnStartStreak.TabIndex = 5;
@@ -185,7 +190,7 @@
             cBoxCharacterSelector.DropDownStyle = ComboBoxStyle.DropDownList;
             cBoxCharacterSelector.FormattingEnabled = true;
             cBoxCharacterSelector.Items.AddRange(new object[] { "Basic Streak", "Random Perk Streak" });
-            cBoxCharacterSelector.Location = new Point(394, 96);
+            cBoxCharacterSelector.Location = new Point(412, 96);
             cBoxCharacterSelector.Name = "cBoxCharacterSelector";
             cBoxCharacterSelector.Size = new Size(231, 23);
             cBoxCharacterSelector.TabIndex = 3;
@@ -195,7 +200,7 @@
             cBoxStreakTypeSelect.DropDownStyle = ComboBoxStyle.DropDownList;
             cBoxStreakTypeSelect.FormattingEnabled = true;
             cBoxStreakTypeSelect.Items.AddRange(new object[] { "Basic Streak", "Random Perk Streak", "2v8 Random Streak" });
-            cBoxStreakTypeSelect.Location = new Point(394, 54);
+            cBoxStreakTypeSelect.Location = new Point(412, 54);
             cBoxStreakTypeSelect.Name = "cBoxStreakTypeSelect";
             cBoxStreakTypeSelect.Size = new Size(231, 23);
             cBoxStreakTypeSelect.TabIndex = 2;
@@ -265,6 +270,7 @@
             // 
             // tabPage5
             // 
+            tabPage5.Controls.Add(btnSaveAndQuit);
             tabPage5.Controls.Add(btn2v8Loss);
             tabPage5.Controls.Add(btn2v8Win);
             tabPage5.Controls.Add(lbl2v8Wins);
@@ -281,6 +287,17 @@
             tabPage5.TabIndex = 4;
             tabPage5.Text = "2v8RandomStreak";
             tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // btnSaveAndQuit
+            // 
+            btnSaveAndQuit.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnSaveAndQuit.Location = new Point(406, 148);
+            btnSaveAndQuit.Name = "btnSaveAndQuit";
+            btnSaveAndQuit.Size = new Size(224, 37);
+            btnSaveAndQuit.TabIndex = 10;
+            btnSaveAndQuit.Text = "Save and Quit";
+            btnSaveAndQuit.UseVisualStyleBackColor = true;
+            btnSaveAndQuit.Click += SaveandQuitButton;
             // 
             // btn2v8Loss
             // 
@@ -372,6 +389,22 @@
             pBox2v8P1.TabIndex = 1;
             pBox2v8P1.TabStop = false;
             // 
+            // tBoxStreakName
+            // 
+            tBoxStreakName.Location = new Point(412, 137);
+            tBoxStreakName.Name = "tBoxStreakName";
+            tBoxStreakName.Size = new Size(231, 23);
+            tBoxStreakName.TabIndex = 6;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(323, 140);
+            label3.Name = "label3";
+            label3.Size = new Size(72, 15);
+            label3.TabIndex = 7;
+            label3.Text = "Streak name";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -427,5 +460,8 @@
         private Button btn2v8Loss;
         private Button btn2v8Win;
         private Button btnNewStreak;
+        private Button btnSaveAndQuit;
+        private Label label3;
+        private TextBox tBoxStreakName;
     }
 }
