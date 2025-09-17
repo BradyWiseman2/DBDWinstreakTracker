@@ -6,7 +6,11 @@ The main purpose for this application is for tracking winstreaks with more compl
 much of the data from the game itself has been included with this program, such as characters, perks, and UI, imported from an API, then modified by myself to suit the needs of this program.
 
 Future TODO:
+
 More UI improvements
+
 More modes
+
 Match history within Streaks
+
 Overall stats based on all Streaks within a category
